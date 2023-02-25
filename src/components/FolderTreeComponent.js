@@ -1,4 +1,6 @@
 import FolderTree from "react-folder-tree";
+import "./FolderTreeComponent.css";
+import GroupLogo from "../assets/group.svg";
 import { Fragment, useState, useEffect } from "react";
 import axios from "axios";
 
@@ -20,11 +22,21 @@ function useFileTree() {
 
 function FolderTreeComponent() {
   const fileTree = useFileTree();
+  const customIcon = ({ onClick: defaultOnClick, nodeData }) => {
+    const { path, name, checked, isOpen, ...restData } = nodeData;
+
+    return <GroupLogo />;
+  };
   console.log("test");
   console.log(fileTree);
   return (
-    <div className="">
-      <FolderTree data={fileTree} showCheckbox={false} indentPixels={15} />
+    <div className="inline">
+      <FolderTree
+        data={fileTree}
+        showCheckbox={false}
+        indentPixels={15}
+        iconComponents={GroupLogo}
+      />
     </div>
   );
 }
