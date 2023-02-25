@@ -22,21 +22,11 @@ function useFileTree() {
 
 function FolderTreeComponent() {
   const fileTree = useFileTree();
-  const customIcon = ({ onClick: defaultOnClick, nodeData }) => {
-    const { path, name, checked, isOpen, ...restData } = nodeData;
-
-    return <GroupLogo />;
-  };
   console.log("test");
   console.log(fileTree);
   return (
     <div className="inline">
-      <FolderTree
-        data={fileTree}
-        showCheckbox={false}
-        indentPixels={15}
-        iconComponents={GroupLogo}
-      />
+      <FolderTree data={fileTree} showCheckbox={false} indentPixels={15} />
     </div>
   );
 }
