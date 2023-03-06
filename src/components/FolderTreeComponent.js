@@ -19,6 +19,16 @@ function useFileTree() {
   }, [loading]);
   return fileTree;
 }
+const onNodeClick = ({ defaultOnClick, nodeData }) => {
+  defaultOnClick();
+
+  const { path, name, checked, isOpen } = nodeData;
+  alert(name);
+};
+
+const EditIcon = (...args) => null;
+const DeleteIcon = (...args) => null;
+const CancelIcon = (...args) => null;
 
 function FolderTreeComponent() {
   const fileTree = useFileTree();
@@ -26,7 +36,13 @@ function FolderTreeComponent() {
   console.log(fileTree);
   return (
     <div className="inline">
-      <FolderTree data={fileTree} showCheckbox={false} indentPixels={15} />
+      <FolderTree
+        data={fileTree}
+        iconComponents={{ EditIcon, DeleteIcon, CancelIcon }}
+        showCheckbox={false}
+        indentPixels={15}
+        onNameClick={onNodeClick}
+      />
     </div>
   );
 }

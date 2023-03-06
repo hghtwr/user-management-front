@@ -1,11 +1,19 @@
 import FolderTreeComponent from "./FolderTreeComponent";
 
+const onNodeClick = ({ defaultOnClick, nodeData }) => {
+  defaultOnClick();
+
+  const { path, name, checked, isOpen } = nodeData;
+  console.log(path);
+};
+
 function SplitLayout() {
   return (
-    <div className="flex flex-wrap sm:flex-row-reverse items-stretch h-screen">
-      <div className="w-full md:w-1/2 xl:w-3/5 bg-cover flex"></div>
-      <div className="w-full flex-1 bg-blue-lightest p-4 overflow-y-scroll">
-        <FolderTreeComponent></FolderTreeComponent>
+    <div className="m-1	 flex flex-wrap sm:flex-row-reverse items-stretch ">
+      <div className="md:w-3/4 xl:w-3/5 flex scrollbar-hide"></div>
+      <div className="w-full flex-1 bg-blue-lightest p-4 	">
+        <h2 className="font-semibold text-lg m-1">Repositories</h2>
+        <FolderTreeComponent className="border border-sky-500"></FolderTreeComponent>
       </div>
     </div>
   );
