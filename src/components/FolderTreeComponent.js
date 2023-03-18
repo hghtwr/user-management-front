@@ -23,7 +23,6 @@ const onNodeClick = ({ defaultOnClick, nodeData }) => {
   defaultOnClick();
 
   const { path, name, checked, isOpen } = nodeData;
-  alert(name);
 };
 
 const EditIcon = (...args) => null;
@@ -32,8 +31,6 @@ const CancelIcon = (...args) => null;
 
 function FolderTreeComponent() {
   const fileTree = useFileTree();
-  console.log("test");
-  console.log(fileTree);
   return (
     <div className="inline">
       <FolderTree

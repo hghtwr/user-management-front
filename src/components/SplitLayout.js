@@ -1,12 +1,5 @@
 import FolderTreeComponent from "./FolderTreeComponent";
 
-const onNodeClick = ({ defaultOnClick, nodeData }) => {
-  defaultOnClick();
-
-  const { path, name, checked, isOpen } = nodeData;
-  console.log(path);
-};
-
 function SplitLayout() {
   return (
     <div className="m-1	 flex flex-wrap sm:flex-row-reverse items-stretch ">
