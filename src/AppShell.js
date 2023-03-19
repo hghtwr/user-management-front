@@ -32,7 +32,6 @@ function useUserCount() {
     async function getData() {
       let data = await axios.head("http://localhost:3000/users");
       data = await data;
-      console.log(data);
       setUserCount({
         countTitle: "user count",
         countDescription: "Sum of all users in your projects",
@@ -54,7 +53,6 @@ function useProjectCount() {
         "http://localhost:3000/groups?filter=project"
       );
       data = await data;
-      console.log("project count");
       setProjectCount({
         countTitle: "No of projects",
         countDescription: "Number of all projects",
@@ -74,7 +72,6 @@ function useGroupCount() {
     async function getData() {
       let data = await axios.head("http://localhost:3000/groups?filter=group");
       data = await data;
-      console.log("group count");
       setGroupCount({
         countTitle: "No of Groups",
         countDescription: "Number of all Groups",
@@ -86,7 +83,7 @@ function useGroupCount() {
   }, [loading]);
   return { groupCount };
 }
-
+/*
 function useGenericCount(countTitle, countDescription, uri) {
   const [url, setUrl] = useState("http://localhost:3000" + uri);
   const [count, setCount] = useState();
@@ -101,7 +98,6 @@ function useGenericCount(countTitle, countDescription, uri) {
     async function getData() {
       let data = await axios.head(url);
       data = await data;
-      console.log(data);
       setCountObject((oldState) => ({
         ...oldState,
         countNumber: data.headers["x-total-count"],
@@ -110,17 +106,41 @@ function useGenericCount(countTitle, countDescription, uri) {
     }
     getData();
     setLoading(1);
-  }, [loading, countObject, url, count]);
-  return { countObject };
+  }, [loading]);
+  console.log("number: " + countObject.countNumber);
+  return countObject;
+}*/
+function useGenericCount(countInput, uri) {
+  let [countObject, setCountObject] = useState(countInput);
+  const [url, setUrl] = useState("http://localhost:3000" + uri);
+  const [loading, setLoading] = useState(0);
+
+  useEffect(() => {
+    async function getData() {
+      let data = await axios.head(url);
+      data = await data;
+      setCountObject((oldState) => ({
+        ...oldState,
+        countNumber: data.headers["x-total-count"],
+      }));
+    }
+    getData();
+    setLoading(1);
+  }, [loading]);
+  console.log("number: " + countObject.countNumber);
+  return countObject;
 }
 
 export default function Example() {
-  const { userCount } = useGenericCount(
-    "Users",
-    "Number of users in your TLG",
+  const userCount = useGenericCount(
+    {
+      countTitle: "Users",
+      countDescription: "Number of users in your TLG",
+    },
     "/users"
   );
-  const { groupCount } = useGenericCount(
+  console.log("outside: " + JSON.stringify(userCount));
+  /*const { groupCount } = useGenericCount(
     "Groups",
     "Number of groups in your TLG",
     "/groups?filter=group"
@@ -130,11 +150,11 @@ export default function Example() {
     "Projects",
     "Number of projects in your TLG",
     "/groups?filter=projects"
-  );
+  );*/
 
   //const { userCount } = useUserCount();
-  //const { groupCount } = useGroupCount();
-  //const { projectCount } = useProjectCount();
+  const { groupCount } = useGroupCount();
+  const { projectCount } = useProjectCount();
   return (
     <>
       <div className="min-h-full">
