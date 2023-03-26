@@ -25,64 +25,6 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-function useUserCount() {
-  const [userCount, setUserCount] = useState({});
-  const [loading, setLoading] = useState(0);
-  useEffect(() => {
-    async function getData() {
-      let data = await axios.head("http://localhost:3000/users");
-      data = await data;
-      setUserCount({
-        countTitle: "user count",
-        countDescription: "Sum of all users in your projects",
-        countNumber: data.headers["x-total-count"],
-      });
-    }
-    getData();
-    setLoading(1);
-  }, [loading]);
-  return { userCount };
-}
-
-function useProjectCount() {
-  const [projectCount, setProjectCount] = useState({});
-  const [loading, setLoading] = useState(0);
-  useEffect(() => {
-    async function getData() {
-      let data = await axios.head(
-        "http://localhost:3000/groups?filter=project"
-      );
-      data = await data;
-      setProjectCount({
-        countTitle: "No of projects",
-        countDescription: "Number of all projects",
-        countNumber: data.headers["x-total-count"],
-      });
-    }
-    getData();
-    setLoading(1);
-  }, [loading]);
-  return { projectCount };
-}
-
-function useGroupCount() {
-  const [groupCount, setGroupCount] = useState({});
-  const [loading, setLoading] = useState(0);
-  useEffect(() => {
-    async function getData() {
-      let data = await axios.head("http://localhost:3000/groups?filter=group");
-      data = await data;
-      setGroupCount({
-        countTitle: "No of Groups",
-        countDescription: "Number of all Groups",
-        countNumber: data.headers["x-total-count"],
-      });
-    }
-    getData();
-    setLoading(1);
-  }, [loading]);
-  return { groupCount };
-}
 function useGenericCount(countInput, uri) {
   let [countObject, setCountObject] = useState(countInput);
   const [url, setUrl] = useState("http://localhost:3000" + uri);
@@ -128,9 +70,6 @@ export default function Example() {
     "/groups?filter=projects"
   );
 
-  //const { userCount } = useUserCount();
-  //const { groupCount } = useGroupCount();
-  //const { projectCount } = useProjectCount();
   return (
     <>
       <div className="min-h-full">
