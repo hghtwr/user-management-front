@@ -83,33 +83,6 @@ function useGroupCount() {
   }, [loading]);
   return { groupCount };
 }
-/*
-function useGenericCount(countTitle, countDescription, uri) {
-  const [url, setUrl] = useState("http://localhost:3000" + uri);
-  const [count, setCount] = useState();
-  const [countObject, setCountObject] = useState({
-    countTitle: countTitle,
-    countDescription: countDescription,
-    countNumber: 0,
-  });
-  const [loading, setLoading] = useState(0);
-
-  useEffect(() => {
-    async function getData() {
-      let data = await axios.head(url);
-      data = await data;
-      setCountObject((oldState) => ({
-        ...oldState,
-        countNumber: data.headers["x-total-count"],
-      }));
-      setCount(data.headers["x-total-count"]);
-    }
-    getData();
-    setLoading(1);
-  }, [loading]);
-  console.log("number: " + countObject.countNumber);
-  return countObject;
-}*/
 function useGenericCount(countInput, uri) {
   let [countObject, setCountObject] = useState(countInput);
   const [url, setUrl] = useState("http://localhost:3000" + uri);
@@ -139,22 +112,25 @@ export default function Example() {
     },
     "/users"
   );
-  console.log("outside: " + JSON.stringify(userCount));
-  /*const { groupCount } = useGenericCount(
-    "Groups",
-    "Number of groups in your TLG",
+  const groupCount = useGenericCount(
+    {
+      countTitle: "Groups",
+      countDescription: "Number of groups in your TLG",
+    },
     "/groups?filter=group"
   );
 
-  const { projectCount } = useGenericCount(
-    "Projects",
-    "Number of projects in your TLG",
+  const projectCount = useGenericCount(
+    {
+      countTitle: "Projects",
+      countDescription: "Number of projects in your TLG",
+    },
     "/groups?filter=projects"
-  );*/
+  );
 
   //const { userCount } = useUserCount();
-  const { groupCount } = useGroupCount();
-  const { projectCount } = useProjectCount();
+  //const { groupCount } = useGroupCount();
+  //const { projectCount } = useProjectCount();
   return (
     <>
       <div className="min-h-full">
